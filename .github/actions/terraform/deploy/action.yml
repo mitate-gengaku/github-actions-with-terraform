@@ -51,6 +51,7 @@ runs:
       continue-on-error: true
       run: |
         terraform fmt -check -diff
+        echo ${{ inputs.rds_password }}
 
     - name: init
       shell: bash
