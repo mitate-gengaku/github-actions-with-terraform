@@ -22,6 +22,18 @@ inputs:
     description: "s3 bucket for tfstate"
     required: true
     default: ""
+  rds_username:
+    description: "rds username"
+    required: true
+  rds_password:
+    description: "rds password"
+    required: true
+  rds_dbname:
+    description: "rds dbname"
+    required: true
+  rds_endpoint_name:
+    description: "rds endpoint name"
+    required: true
 
 runs:
   using: "composite"

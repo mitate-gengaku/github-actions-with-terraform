@@ -68,7 +68,19 @@ module "security_group" {
 
 module "s3" {
   source = "../module/s3"
-
   s3_bucket_name = "bucket"
   cloudfront_arn = ""
+}
+
+module "rds" {
+  source = "../module/rds"
+
+  identifier = "rds-mysql"
+  rds_sg_id = module.security_group.rds_sg_id
+  subnet_ids  = [for subnet in module.network.private_subnets : subnet.id]
+
+  rds_username = var.rds_username
+  rds_password = var.rds_password
+  rds_dbname = var.rds_dbname
+  rds_endpoint_name = var.rds_endpoint_name
 }
