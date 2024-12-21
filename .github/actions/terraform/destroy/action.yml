@@ -59,7 +59,7 @@ runs:
         terraform validate -no-color
 
     - name: destory
-      if: ${{ inputs.apply == "yes"}}
+      if: ${{ inputs.apply == 'yes' }}
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       continue-on-error: true
