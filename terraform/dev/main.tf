@@ -37,3 +37,31 @@ module "network" {
     }
   }
 }
+
+module "security_group" {
+  source = "../module/security-groups"
+
+  vpc_id = module.network.vpc_id
+  security_groups = {
+    "ecs" = {
+      description = "Security group for ECS"
+      name        = "security-group-ecs"
+      name_prefix = null
+    },
+    "alb" = {
+      description = "Security group for ALB"
+      name        = "security-group-alb"
+      name_prefix = null
+    },
+    "rds" = {
+      description = "Security group for RDS"
+      name        = "security-group-rds"
+      name_prefix = null
+    },
+    "elasticache" = {
+      description = "Security group for ElastiCache"
+      name        = "security-group-elasticache"
+      name_prefix = null
+    }
+  }
+}

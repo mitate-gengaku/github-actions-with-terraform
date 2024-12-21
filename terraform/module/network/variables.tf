@@ -3,15 +3,15 @@ variable "application_prefix" {
   default = "shomotsu"
 }
 
+variable "env" {
+  type = string
+  default = "dev"
+}
+
 variable "public_subnets" {
   
 }
 
 variable "private_subnets" {
   
-}
-
-variable "env" {
-  type = string
-  default = "dev"
 }
