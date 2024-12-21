@@ -47,9 +47,9 @@ runs:
       run: |
         terraform init \
           -migrate-state \
-          -backend-config="bucket=${{ env.BUCKET_NAME }}" \
-          -backend-config="key=terraform.tfstate" \
-          -backend-config="region=ap-northeast-1"
+          -backend-config="bucket=${{ inputs.terraform_tfstate_s3_bucket }}" \
+          -backend-config="key=${{ inputs.terraform_tfstate_key }}" \
+          -backend-config="region=${{ inputs.region }}"
 
     - name: validate
       shell: bash
