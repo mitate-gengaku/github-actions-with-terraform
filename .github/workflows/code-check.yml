@@ -39,13 +39,13 @@ jobs:
           docker compose -f docker-compose.lint.yml up -d app
       - name: Run npm ci
         run: |
-          docker compose -f docker-compose.lint.yml exec --user root app npm install
+          docker compose -f docker-compose.lint.yml exec --user root app npm ci
 
-      - name: Run npm run lint prettier
+      - name: Run npm run lint
         run: |
-          docker compose -f docker-compose.lint.yml exec --user root app npm run format
+          docker compose -f docker-compose.lint.yml exec --user root app npm run lint
 
-      - name: Run npm run jest
+      - name: Run npm run test
         run: |
           docker compose -f docker-compose.lint.yml exec --user root app npm run test
 
