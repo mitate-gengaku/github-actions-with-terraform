@@ -1,8 +1,7 @@
-name: Deploy to AWS, Vercel for development environment
+name: Destroy terraform
 
 on:
   workflow_dispatch:
-  push:
 
 permissions:
   id-token: write
@@ -15,12 +14,7 @@ env:
   TERRAFORM_TFSTATE_S3_BUCKET: ${{ secrets.TERRAFORM_TFSTATE_S3_BUCKET }}
 
 jobs:
-  setup:
-    runs-on: ubuntu-latest          
-    steps:
-      - uses: actions/checkout@v4
-    
-  aws:
+  destory:
     needs: [setup]
     runs-on: ubuntu-latest    
     environment: dev

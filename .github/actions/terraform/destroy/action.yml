@@ -1,5 +1,5 @@
-name: Setup terraform
-description: terraform composite action
+name: Destroy terraform
+description: destroy terraform composite action
 
 inputs:
   working-directory:
@@ -58,16 +58,9 @@ runs:
       run: |
         terraform validate -no-color
 
-    - name: plan
-      shell: bash
-      working-directory: ${{ inputs.working-directory }}
-      continue-on-error: true
-      run: |
-        terraform plan -no-color -detailed-exitcode -input=false
-    
-    - name: apply
+    - name: destory
       if: ${{ inputs.apply == "yes"}}
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       continue-on-error: true
-      run: terraform apply -no-color -input=false -auto-approve
+      run: terraform destory -no-color -input=false -auto-approve
