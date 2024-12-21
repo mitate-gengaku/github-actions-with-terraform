@@ -29,6 +29,11 @@ jobs:
       - name: Build container 
         run: |
           docker compose -f docker-compose.lint.yml up -d app
+          mkdir -p src/node_modules
+          chmod 777 src/node_modules
+          sudo chown -R 1000:1000 src
+          docker compose up -d --build
+          
       - name: Run npm ci
         run: |
           echo "::notice title=npm ci"
