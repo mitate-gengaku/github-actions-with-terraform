@@ -10,8 +10,8 @@ inputs:
     description: "aws region"
     required: false
     default: "ap-northeast-1"
-  accept:
-    description: "terraform accept"
+  apply:
+    description: "terraform apply"
     required: false
     default: "no"
   terraform_tfstate_key:
@@ -66,6 +66,8 @@ runs:
         terraform plan -no-color -detailed-exitcode -input=false 2>&1
     # 
     # - name: apply
+    #   if: ${{ inputs.apply }}
     #   shell: bash
     #   working-directory: ${{ inputs.working-directory }}
     #   continue-on-error: true
+    #   run: terraform apply -no-color -input=false -auto-approve 2>&1
