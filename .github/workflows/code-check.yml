@@ -31,15 +31,24 @@ jobs:
           docker compose -f docker-compose.lint.yml up -d app
       - name: Run npm ci
         run: |
-          docker compose -f docker-compose.lint.yml exec --user root app npm ci
+          echo "::notice title=npm ci"
+          echo "::group::npm ci"
+          docker compose run --rm --user 1000:1000 app npm ci
+          echo "::endgroup::"
 
       - name: Run npm run lint
         run: |
-          docker compose -f docker-compose.lint.yml exec --user root app npm run lint
+          echo "::notice title=npm run lint"
+          echo "::group::npm run lint"
+          docker compose run --rm --user 1000:1000 app npm run lint
+          echo "::endgroup::"
 
       - name: Run npm run test
         run: |
-          docker compose -f docker-compose.lint.yml exec --user root app npm run test:r
+          echo "::notice title=npm run test"
+          echo "::group::npm run test"
+          docker compose run --rm --user 1000:1000 app npm run test:r
+          echo "::endgroup::"
 
   api:
     name: API
@@ -59,14 +68,18 @@ jobs:
           docker compose -f docker-compose.lint.yml up -d api web storage redis
       - name: Setup Laravel
         run: |
-          docker compose -f docker-compose.lint.yml exec --user root api php -r "file_exists('.env') || copy('.env.testing', '.env');"
-          docker compose -f docker-compose.lint.yml exec --user root api composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-          docker compose -f docker-compose.lint.yml exec --user root api composer require brianium/paratest --dev
-          docker compose -f docker-compose.lint.yml exec --user root api php artisan key:generate --env=testing
-          docker compose -f docker-compose.lint.yml exec --user root api chmod -R 777 storage bootstrap/cache
-          docker compose -f docker-compose.lint.yml exec --user root api touch database/database.sqlite
-          docker compose -f docker-compose.lint.yml exec --user root api php artisan config:clear
-          docker compose -f docker-compose.lint.yml exec --user root api php artisan cache:clearh
+          echo "::notice title=setup laravel"
+          echo "::group::setup laravel"
+          docker compose run --rm --user 1000:1000 app npm ci
+          docker compose -f docker-compose.lint.yml exec --user 1000:1000 api php -r "file_exists('.env') || copy('.env.testing', '.env');"
+          docker compose -f docker-compose.lint.yml exec --user 1000:1000 api composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+          docker compose -f docker-compose.lint.yml exec --user 1000:1000 api composer require brianium/paratest --dev
+          docker compose -f docker-compose.lint.yml exec --user 1000:1000 api php artisan key:generate --env=testing
+          docker compose -f docker-compose.lint.yml exec --user 1000:1000 api chmod -R 777 storage bootstrap/cache
+          docker compose -f docker-compose.lint.yml exec --user 1000:1000 api touch database/database.sqlite
+          docker compose -f docker-compose.lint.yml exec --user 1000:1000 api php artisan config:clear
+          docker compose -f docker-compose.lint.yml exec --user 1000:1000 api php artisan cache:clear
+          echo "::endgroup::"
 
       - name: Configure MinIO in .env
         run: |
@@ -79,7 +92,10 @@ jobs:
           
       - name: Run pint
         run: |
-          docker compose -f docker-compose.lint.yml exec --user root api ./vendor/bin/pint
+          echo "::notice title=pint"
+          echo "::group::pint"
+          docker compose -f docker-compose.lint.yml exec --user 1000:1000 api ./vendor/bin/pint
+          echo "::endgroup::"
 
       - name: Run phpunit
         env:
@@ -88,7 +104,10 @@ jobs:
           DB_PORT: 3306
           DB_DATABASE: /var/www/html/database/database.sqlite
         run: |
-          docker compose -f docker-compose.lint.yml exec --user root api php artisan test --parallel --processes=4
+          echo "::notice title=php artisan phpunit"
+          echo "::group::php artisan phpunit"
+          docker compose -f docker-compose.lint.yml exec --user 1000:1000 api php artisan test --parallel --processes=4
+          echo "::endgroup::"
   
   result:
     needs: [front,api]
