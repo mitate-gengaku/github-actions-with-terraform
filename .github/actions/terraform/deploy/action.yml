@@ -83,3 +83,8 @@ runs:
       working-directory: ${{ inputs.working-directory }}
       continue-on-error: true
       run: terraform apply -no-color -input=false -auto-approve
+      env:
+        TF_VAR_rds_username: ${{ inputs.rds_username }}
+        TF_VAR_rds_password: ${{ inputs.rds_passwordd }}
+        TF_VAR_rds_dbname: ${{ inputs.rds_dbname }}
+        TF_VAR_rds_endpoint_name: ${{ inputs.rds_endpoint_name }}
