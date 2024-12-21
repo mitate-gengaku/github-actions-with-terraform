@@ -40,7 +40,6 @@ resource "aws_cloudfront_distribution" "s3_cloudfront" {
     }
   }
 
-  # aliases = ["${data.aws_acm_certificate.s3_acm.domain}"]
   aliases = ["${data.aws_acm_certificate.s3_image_acm.domain}"]
 
   viewer_certificate {

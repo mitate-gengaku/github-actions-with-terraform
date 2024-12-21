@@ -115,7 +115,7 @@ module "cloudfront" {
   applicaiton_waf_id = module.waf.application_waf_arn
 
   aliases = [
-      "dev.shomotsu.net",
+    "dev.shomotsu.net",
   ]
 }
 
