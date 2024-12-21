@@ -45,7 +45,7 @@ data "aws_ssm_parameter" "rds_dbname" {
 }
 
 data "aws_ssm_parameter" "rds_password" {
-  name = "/test/test"
+  name = var.rds_password
 }
 
 resource "aws_ssm_parameter" "rds_endpoint" {
