@@ -36,6 +36,7 @@ jobs:
 
       - uses: ./.github/actions/terraform/deploy
         with:
+          apply: 'yes'
           region: ${{ env.AWS_REGION }}
           terraform_tfstate_key: ${{ env.TERRAFORM_TFSTATE_KEY }}
           terraform_tfstate_s3_bucket: ${{ env.TERRAFORM_TFSTATE_S3_BUCKET }}
