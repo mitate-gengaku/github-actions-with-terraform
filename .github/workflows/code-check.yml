@@ -70,18 +70,19 @@ jobs:
       - name: Build container 
         run: |
           docker compose -f docker-compose.lint.yml up -d api web storage redis
+
       - name: Setup Laravel
         run: |
           echo "::notice title=setup laravel"
           echo "::group::setup laravel"
-          docker compose -f docker-compose.lint.yml exec --user root api php -r "file_exists('.env') || copy('.env.testing', '.env');"
-          docker compose -f docker-compose.lint.yml exec --user 1000:1000 api composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-          docker compose -f docker-compose.lint.yml exec --user 1000:1000 api composer require brianium/paratest --dev
-          docker compose -f docker-compose.lint.yml exec --user 1000:1000 api php artisan key:generate --env=testing
-          docker compose -f docker-compose.lint.yml exec --user 1000:1000 api chmod -R 777 storage bootstrap/cache
-          docker compose -f docker-compose.lint.yml exec --user 1000:1000 api touch database/database.sqlite
-          docker compose -f docker-compose.lint.yml exec --user 1000:1000 api php artisan config:clear
-          docker compose -f docker-compose.lint.yml exec --user 1000:1000 api php artisan cache:clear
+          docker compose -f docker-compose.lint.yml run --rm --user root api php -r "file_exists('.env') || copy('.env.testing', '.env');"
+          docker compose -f docker-compose.lint.yml run --rm --user 1000:1000 api composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+          docker compose -f docker-compose.lint.yml run --rm --user 1000:1000 api composer require brianium/paratest --dev
+          docker compose -f docker-compose.lint.yml run --rm --user 1000:1000 api php artisan key:generate --env=testing
+          docker compose -f docker-compose.lint.yml run --rm --user 1000:1000 api chmod -R 777 storage bootstrap/cache
+          docker compose -f docker-compose.lint.yml run --rm --user 1000:1000 api touch database/database.sqlite
+          docker compose -f docker-compose.lint.yml run --rm --user 1000:1000 api php artisan config:clear
+          docker compose -f docker-compose.lint.yml run --rm --user 1000:1000 api php artisan cache:clear
           echo "::endgroup::"
 
       - name: Configure MinIO in .env
@@ -97,7 +98,7 @@ jobs:
         run: |
           echo "::notice title=pint"
           echo "::group::pint"
-          docker compose -f docker-compose.lint.yml exec --user 1000:1000 api ./vendor/bin/pint
+          docker compose -f docker-compose.lint.yml run --rm --user 1000:1000 api ./vendor/bin/pint
           echo "::endgroup::"
 
       - name: Run phpunit
@@ -109,7 +110,7 @@ jobs:
         run: |
           echo "::notice title=php artisan phpunit"
           echo "::group::php artisan phpunit"
-          docker compose -f docker-compose.lint.yml exec --user 1000:1000 api php artisan test --parallel --processes=4
+          docker compose -f docker-compose.lint.yml run --rm --user 1000:1000 api php artisan test --parallel --processes=4
           echo "::endgroup::"
   
   result:
