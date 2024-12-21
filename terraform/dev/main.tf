@@ -99,3 +99,32 @@ module "elasticache" {
 module "waf" {
   source = "../module/waf"
 }
+
+module "cloudfront" {
+  source = "../module/cloudfront"
+
+  oac_name = "shomotsu-s3-oac"
+  image_acm_domain = "images.shomotsu.net"
+  s3_origin_id = module.s3.s3_bucket_id
+  s3_origin_name = module.s3.s3_bucket_regional_domain_name
+  web_acl_id = module.waf.cloudfront_image_waf_arn
+  ### 
+  alb_id = aws_alb.alb.id
+  ### 
+  us1_acm_arn = var.us1_acm_arn
+  applicaiton_waf_id = module.waf.application_waf_arn
+
+  aliases = [
+      "dev.shomotsu.net",
+  ]
+}
+
+resource "aws_alb" "alb" {
+  name     = "shomotsu-development-alb"
+  internal = false
+  load_balancer_type = "application"
+  security_groups = [
+    module.security_group.alb_sg_id
+  ]
+  subnets = [for subnet in module.subnet.public_subnets : subnet.id]
+}

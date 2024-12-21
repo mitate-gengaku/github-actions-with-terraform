@@ -17,3 +17,7 @@ variable "rds_endpoint_name" {
 variable "elasticache_name" {
   type = string
 }
+
+variable "us1_acm_arn" {
+  type = string
+}
