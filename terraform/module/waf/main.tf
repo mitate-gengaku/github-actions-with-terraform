@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 resource "aws_wafv2_web_acl" "application_waf" {
-  name        = "ApplicationWAF"
+  name        = join("-", [var.application_prefix, var.env, "ApplicationWAF"])
   description = "WAF for application"
   scope       = "CLOUDFRONT"
 
@@ -234,7 +234,7 @@ resource "aws_wafv2_web_acl" "application_waf" {
   }
 }
 resource "aws_wafv2_web_acl" "cloudfront_image_waf" {
-  name        = "CloudfrontImageWAF"
+  name        = join("-", [var.application_prefix, var.env, "CloudfrontImageWAF"])
   description = "WAF for Cloudfront"
   scope       = "CLOUDFRONT"
 
