@@ -63,4 +63,4 @@ runs:
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       continue-on-error: true
-      run: terraform destory -no-color -input=false -auto-approve
+      run: terraform destroy -no-color -input=false -auto-approve
