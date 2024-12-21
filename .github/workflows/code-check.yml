@@ -11,12 +11,7 @@ permissions:
   
 jobs:
   setup:
-    runs-on: ubuntu-latest
-    env:
-      AWS_ACCESS_KEY_ID: root
-      AWS_SECRET_ACCESS_KEY: "password"
-      AWS_DEFAULT_REGION: us-east-1
-          
+    runs-on: ubuntu-latest          
     steps:
       - uses: actions/checkout@v4
       - uses: docker/setup-buildx-action@v2
@@ -31,9 +26,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v2
-      - name: "use Node"
-        uses: actions/setup-node@v4
       - name: Build container 
         run: |
           docker compose -f docker-compose.lint.yml up -d app
@@ -62,9 +54,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v2
-      - name: "use Node"
-        uses: actions/setup-node@v4
       - name: Build container 
         run: |
           docker compose -f docker-compose.lint.yml up -d api web storage redis
@@ -77,7 +66,7 @@ jobs:
           docker compose -f docker-compose.lint.yml exec --user root api chmod -R 777 storage bootstrap/cache
           docker compose -f docker-compose.lint.yml exec --user root api touch database/database.sqlite
           docker compose -f docker-compose.lint.yml exec --user root api php artisan config:clear
-          docker compose -f docker-compose.lint.yml exec --user root api php artisan cache:clear
+          docker compose -f docker-compose.lint.yml exec --user root api php artisan cache:clearh
 
       - name: Configure MinIO in .env
         run: |
