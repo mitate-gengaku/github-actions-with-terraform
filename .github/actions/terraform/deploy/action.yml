@@ -69,6 +69,11 @@ runs:
       continue-on-error: true
       run: |
         terraform validate -no-color
+      env:
+        TF_VAR_rds_username: ${{ inputs.rds_username }}
+        TF_VAR_rds_password: ${{ inputs.rds_passwordd }}
+        TF_VAR_rds_dbname: ${{ inputs.rds_dbname }}
+        TF_VAR_rds_endpoint_name: ${{ inputs.rds_endpoint_name }}
 
     - name: plan
       shell: bash
@@ -76,6 +81,11 @@ runs:
       continue-on-error: true
       run: |
         terraform plan -no-color -detailed-exitcode -input=false
+      env:
+        TF_VAR_rds_username: ${{ inputs.rds_username }}
+        TF_VAR_rds_password: ${{ inputs.rds_passwordd }}
+        TF_VAR_rds_dbname: ${{ inputs.rds_dbname }}
+        TF_VAR_rds_endpoint_name: ${{ inputs.rds_endpoint_name }}
     
     - name: apply
       if: ${{ inputs.apply == 'yes' }}
