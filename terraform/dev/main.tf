@@ -95,3 +95,7 @@ module "elasticache" {
     module.security_group.elasticache_sg_id
   ]
 }
+
+module "waf" {
+  source = "../module/waf"
+}

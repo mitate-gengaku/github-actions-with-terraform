@@ -53,4 +53,9 @@ resource "aws_ssm_parameter" "rds_endpoint" {
 
   type        = "SecureString"
   value = sensitive(aws_db_instance.mysql_db.endpoint)
+  tags = {
+    name = var.rds_endpoint_name
+    resource = "ssm"
+    env = var.env
+  }
 }
