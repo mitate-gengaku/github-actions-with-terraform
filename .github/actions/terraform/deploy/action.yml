@@ -5,7 +5,7 @@ inputs:
   working-directory:
     description: working directory
     required: false
-    default: "./infra/dev"
+    default: "terraform/dev"
   region:
     description: "aws region"
     required: false
