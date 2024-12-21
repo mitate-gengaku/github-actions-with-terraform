@@ -88,7 +88,7 @@ runs:
         TF_VAR_rds_dbname: ${{ inputs.rds_dbname }}
         TF_VAR_rds_endpoint_name: ${{ inputs.rds_endpoint_name }}
         TF_VAR_elasticache_name: ${{ inputs.elasticache_name }}
-        TF_VAR_us1_acm_arn: {{ inputs.us1_acm_arn }}
+        TF_VAR_us1_acm_arn: ${{ inputs.us1_acm_arn }}
 
     - name: apply
       if: ${{ inputs.apply == 'yes' }}
@@ -102,4 +102,4 @@ runs:
         TF_VAR_rds_dbname: ${{ inputs.rds_dbname }}
         TF_VAR_rds_endpoint_name: ${{ inputs.rds_endpoint_name }}
         TF_VAR_elasticache_name: ${{ inputs.elasticache_name }}
-        TF_VAR_us1_acm_arn: {{ inputs.us1_acm_arn }}
+        TF_VAR_us1_acm_arn: ${{ inputs.us1_acm_arn }}
