@@ -34,6 +34,9 @@ inputs:
   rds_endpoint_name:
     description: "rds endpoint name"
     required: true
+  elasticache_name:
+    description: "elasticache name"
+    required: true
 
 runs:
   using: "composite"
@@ -81,6 +84,7 @@ runs:
         TF_VAR_rds_password: ${{ inputs.rds_password }}
         TF_VAR_rds_dbname: ${{ inputs.rds_dbname }}
         TF_VAR_rds_endpoint_name: ${{ inputs.rds_endpoint_name }}
+        TF_VAR_elasticache_name: ${{ inputs.elasticache_name }}
     
     - name: apply
       if: ${{ inputs.apply == 'yes' }}
@@ -93,3 +97,4 @@ runs:
         TF_VAR_rds_password: ${{ inputs.rds_password }}
         TF_VAR_rds_dbname: ${{ inputs.rds_dbname }}
         TF_VAR_rds_endpoint_name: ${{ inputs.rds_endpoint_name }}
+        TF_VAR_elasticache_name: ${{ inputs.elasticache_name }}

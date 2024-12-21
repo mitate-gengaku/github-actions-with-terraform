@@ -84,3 +84,14 @@ module "rds" {
   rds_dbname = var.rds_dbname
   rds_endpoint_name = var.rds_endpoint_name
 }
+
+module "elasticache" {
+  source = "../module/elasticache"
+
+  name = var.elasticache_name
+  subnet_ids  = [for subnet in module.network.private_subnets : subnet.id]
+
+  security_group_ids = [
+    module.security_group.elasticache_sg_id
+  ]
+}

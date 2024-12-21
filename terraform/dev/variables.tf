@@ -13,3 +13,7 @@ variable "rds_password" {
 variable "rds_endpoint_name" {
   type = string
 }
+
+variable "elasticache_name" {
+  type = string
+}
