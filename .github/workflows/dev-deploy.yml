@@ -4,6 +4,11 @@ on:
   workflow_dispatch:
   push:
 
+
+permissions:
+  id-token: write
+  contents: write
+  
 env:
   AWS_REGION : "ap-northeast-1"
   ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_ARN }}
@@ -24,7 +29,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ env.ROLE_TO_ASSUME }}
           role-session-name: samplerolesession
