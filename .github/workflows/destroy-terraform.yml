@@ -15,7 +15,6 @@ env:
 
 jobs:
   destory:
-    needs: [setup]
     runs-on: ubuntu-latest    
     environment: dev
     steps:
@@ -30,7 +29,7 @@ jobs:
 
       - uses: ./.github/actions/terraform/destroy
         with:
-          accept: "yes"
+          apply: "yes"
           region: ${{ env.AWS_REGION }}
           terraform_tfstate_key: ${{ env.TERRAFORM_TFSTATE_KEY }}
           terraform_tfstate_s3_bucket: ${{ env.TERRAFORM_TFSTATE_S3_BUCKET }}
