@@ -75,6 +75,9 @@ jobs:
         run: |
           echo "::notice title=setup laravel"
           echo "::group::setup laravel"
+          mkdir -p api/vendor
+          chmod 777 -R api/vendor
+          sudo chown -R 1000:1000 api
           docker compose -f docker-compose.lint.yml run --rm --user root api php -r "file_exists('.env') || copy('.env.testing', '.env');"
           docker compose -f docker-compose.lint.yml run --rm --user 1000:1000 api composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
           docker compose -f docker-compose.lint.yml run --rm --user 1000:1000 api composer require brianium/paratest --dev
