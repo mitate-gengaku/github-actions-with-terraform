@@ -12,10 +12,10 @@ env:
   ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_ARN }}
   TERRAFORM_TFSTATE_KEY: ${{ secrets.TERRAFORM_TFSTATE_KEY }}
   TERRAFORM_TFSTATE_S3_BUCKET: ${{ secrets.TERRAFORM_TFSTATE_S3_BUCKET }}
-  rds_username: ${{ secrets.RDS_USERNAME }}
-  rds_password: ${{ secrets.RDS_PASSWORD }}
-  rds_dbname: ${{ secrets.RDS_DBNAME }}
-  rds_endpoint_name: ${{ secrets.RDS_ENDPOINT_NAME }}
+  RDS_USERNAME: ${{ secrets.RDS_USERNAME }}
+  RDS_PASSWORD: ${{ secrets.RDS_PASSWORD }}
+  RDS_DBNAME: ${{ secrets.RDS_DBNAME }}
+  RDS_ENDPOINT_NAME: ${{ secrets.RDS_ENDPOINT_NAME }}
 
 jobs:
   destory:
