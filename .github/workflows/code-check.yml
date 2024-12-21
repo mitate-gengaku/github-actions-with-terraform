@@ -39,7 +39,7 @@ jobs:
 
       - name: Run npm run test
         run: |
-          docker compose -f docker-compose.lint.yml exec --user root app npm run test
+          docker compose -f docker-compose.lint.yml exec --user root app npm run test:r
 
   api:
     name: API
