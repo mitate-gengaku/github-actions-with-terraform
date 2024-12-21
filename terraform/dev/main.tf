@@ -65,3 +65,10 @@ module "security_group" {
     }
   }
 }
+
+module "s3" {
+  source = "../module/s3"
+
+  s3_bucket_name = "bucket"
+  cloudfront_arn = ""
+}
