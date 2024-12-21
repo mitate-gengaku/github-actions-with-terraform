@@ -1,0 +1,116 @@
+name: Code check
+
+on: 
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize]
+  
+permissions:
+  id-token: write
+  contents: read
+  
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: root
+      AWS_SECRET_ACCESS_KEY: "password"
+      AWS_DEFAULT_REGION: us-east-1
+          
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v2
+      - uses: actions/setup-node@v4
+
+  front:
+    name: Front
+    needs: 
+      - setup
+    runs-on: ubuntu-latest
+          
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v2
+      - name: "use Node"
+        uses: actions/setup-node@v4
+      - name: Build container 
+        run: |
+          docker compose -f docker-compose.lint.yml up -d app
+      - name: Run npm ci
+        run: |
+          docker compose -f docker-compose.lint.yml exec --user root app npm install
+
+      - name: Run npm run lint prettier
+        run: |
+          docker compose -f docker-compose.lint.yml exec --user root app npm run format
+
+      - name: Run npm run jest
+        run: |
+          docker compose -f docker-compose.lint.yml exec --user root app npm run test
+
+  api:
+    name: API
+    needs: 
+      - setup
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: root
+      AWS_SECRET_ACCESS_KEY: "password"
+      AWS_DEFAULT_REGION: us-east-1
+          
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v2
+      - name: "use Node"
+        uses: actions/setup-node@v4
+      - name: Build container 
+        run: |
+          docker compose -f docker-compose.lint.yml up -d api web storage redis
+      - name: Setup Laravel
+        run: |
+          docker compose -f docker-compose.lint.yml exec --user root api php -r "file_exists('.env') || copy('.env.testing', '.env');"
+          docker compose -f docker-compose.lint.yml exec --user root api composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+          docker compose -f docker-compose.lint.yml exec --user root api composer require brianium/paratest --dev
+          docker compose -f docker-compose.lint.yml exec --user root api php artisan key:generate --env=testing
+          docker compose -f docker-compose.lint.yml exec --user root api chmod -R 777 storage bootstrap/cache
+          docker compose -f docker-compose.lint.yml exec --user root api touch database/database.sqlite
+          docker compose -f docker-compose.lint.yml exec --user root api php artisan config:clear
+          docker compose -f docker-compose.lint.yml exec --user root api php artisan cache:clear
+
+      - name: Configure MinIO in .env
+        run: |
+          echo "AWS_ACCESS_KEY_ID=root" >> .env
+          echo "AWS_SECRET_ACCESS_KEY=password" >> .env
+          echo "AWS_DEFAULT_REGION=ap-northeast-1" >> .env
+          echo "AWS_BUCKET=test-bucket" >> .env
+          echo "AWS_ENDPOINT=http://localhost:9020" >> .env
+          echo "AWS_USE_PATH_STYLE_ENDPOINT=true" >> .env
+          
+      - name: Run pint
+        run: |
+          docker compose -f docker-compose.lint.yml exec --user root api ./vendor/bin/pint
+
+      - name: Run phpunit
+        env:
+          DB_CONNECTION: sqlite
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: /var/www/html/database/database.sqlite
+        run: |
+          docker compose -f docker-compose.lint.yml exec --user root api php artisan test --parallel --processes=4
+  
+  result:
+    needs: [front,api]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Check Status
+        run: |
+          if [ "${{ contains(needs.*.result, 'failure') }}" = "true" ]; then
+            echo "Failed"
+            exit 1
+          else
+            echo "Success"
+          fi
