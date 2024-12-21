@@ -126,5 +126,5 @@ resource "aws_alb" "alb" {
   security_groups = [
     module.security_group.alb_sg_id
   ]
-  subnets = [for subnet in module.subnet.public_subnets : subnet.id]
+  subnets = [for subnet in module.network.public_subnets : subnet.id]
 }

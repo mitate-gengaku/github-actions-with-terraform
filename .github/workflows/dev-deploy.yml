@@ -18,6 +18,7 @@ env:
   RDS_DBNAME: ${{ secrets.RDS_DBNAME }}
   RDS_ENDPOINT_NAME: ${{ secrets.RDS_ENDPOINT_NAME }}
   ELASTICACHE_NAME: ${{ secrets.ELASTICACHE_NAME }}
+  US1_ACM_ARN: ${{ secrets.US1_ACM_ARN }}
   
 jobs:
   setup:
@@ -50,3 +51,4 @@ jobs:
           rds_dbname: ${{ env.RDS_DBNAME }}
           rds_endpoint_name: ${{ env.RDS_ENDPOINT_NAME }}
           elasticache_name: ${{ env.ELASTICACHE_NAME }}
+          us1_acm_arn: ${{ env.US1_ACM_ARN }}
