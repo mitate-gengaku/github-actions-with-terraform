@@ -1,0 +1,23 @@
+FROM nginx:1.24.0
+
+COPY ./infra/web/dev/nginx.conf /etc/ngnx/nginx.conf
+COPY ./infra/web/dev/default.localhost.conf /etc/nginx/conf.d/default.conf
+
+COPY ./api /var/www/html
+    
+RUN touch /var/run/nginx.pid && \
+    chown -R nginx:nginx /var/run/nginx.pid /run/nginx.pid
+
+RUN chown -R nginx:0 /var/cache/nginx && \
+    chmod -R g+w /var/cache/nginx
+
+RUN mkdir -p /etc/nginx/ssl/ && \
+    chown -R nginx:nginx /etc/nginx/ssl/ && \
+    chmod -R 755 /etc/nginx/ssl/ && \
+    chmod 775 -R /var/run/nginx.pid /run/nginx.pid
+
+# CMD ["nginx","-g","daemon off;"]
+
+EXPOSE 80
+
+WORKDIR /var/www/html

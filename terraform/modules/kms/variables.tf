@@ -1,0 +1,2 @@
+variable "description" {}
+variable "tags" {}

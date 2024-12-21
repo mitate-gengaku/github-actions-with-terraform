@@ -1,0 +1,38 @@
+services:
+  api:
+    image: ${REPOSITORY_URL}/${LARAVEL_REPOSITORY_NAME}:${IMAGE_TAG}
+    build: 
+      context: .
+      dockerfile: ./infra/api/dev/Dockerfile.dev
+    volumes:
+      - ./api:/var/www/html
+    environment:
+      REPOSITORY_URL: ${REPOSITORY_URL}
+      LARAVEL_REPOSITORY_NAME: ${LARAVEL_REPOSITORY_NAME}
+      IMAGE_TAG: ${IMAGE_TAG}
+
+  app:
+    build: 
+      context: .
+      dockerfile: ./infra/app/dev/Dockerfile.dev
+    ports:
+      - 3000:3000
+      - 6006:6006
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./app:/home/node/shomotsu
+
+  web:
+    image: ${REPOSITORY_URL}/${NGINX_REPOSITORY_NAME}:${IMAGE_TAG}
+    build: 
+      context: .
+      dockerfile: ./infra/web/dev/Dockerfile.dev
+    ports:
+      - 80:80
+    volumes:
+      - ./api:/var/www/html
+    environment:
+      REPOSITORY_URL: ${REPOSITORY_URL}
+      NGINX_REPOSITORY_NAME: ${NGINX_REPOSITORY_NAME}
+      IMAGE_TAG: ${IMAGE_TAG}
