@@ -6,8 +6,8 @@ resource "aws_route53_record" "shomotsu_alb_record" {
   allow_overwrite = true
 
   alias {
-    name                   = var.alb_dns_name
-    zone_id                = var.alb_zone_id
+    name                   = var.alb_cloudfront_dns_name
+    zone_id                = var.alb_cloudfront_zone_id
     evaluate_target_health = true
   }
 }
