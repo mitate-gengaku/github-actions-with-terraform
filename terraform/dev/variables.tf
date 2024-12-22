@@ -22,6 +22,9 @@ variable "elasticache_name" {
   type = string
 }
 
+variable "tokyo_acm_arn" {
+  type = string
+}
 variable "us1_acm_arn" {
   type = string
 }

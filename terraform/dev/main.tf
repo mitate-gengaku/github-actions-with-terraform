@@ -122,7 +122,7 @@ module "cloudfront" {
   s3_origin_name = module.s3.s3_bucket_regional_domain_name
   web_acl_id = module.waf.cloudfront_image_waf_arn
   ### 
-  alb_dns_name = aws_alb.alb.dns_name
+  alb_dns_name = module.alb.alb_dns_name
   ### 
   us1_acm_arn = var.us1_acm_arn
   applicaiton_waf_id = module.waf.application_waf_arn
@@ -132,12 +132,38 @@ module "cloudfront" {
   ]
 }
 
-resource "aws_alb" "alb" {
-  name     = "shomotsu-development-alb"
-  internal = false
-  load_balancer_type = "application"
+module "ecr" {
+  source = "../module/ecr"
+
+  repositories = {
+    "nginx" = {
+      image_tag_mutability = "IMMUTABLE"
+      name                 = "nginx-repository"
+
+      image_scanning_configuration = {
+        scan_on_push = true
+      }
+    }
+    "laravel" = {
+      image_tag_mutability = "IMMUTABLE"
+      name                 = "laravel-repository"
+
+      image_scanning_configuration = {
+        scan_on_push = true
+      }
+    }
+  }
+}
+
+
+module "alb" {
+  source = "../module/alb"
+
   security_groups = [
     module.security_group.alb_sg_id
   ]
   subnets = [for subnet in module.network.public_subnets : subnet.id]
+
+  acm_arn = var.tokyo_acm_arn
+  vpc_id = module.network.vpc_id
 }

@@ -40,6 +40,9 @@ inputs:
   elasticache_name:
     description: "elasticache name"
     required: true
+  tokyo_acm_arn:
+    description: "tokyo acm arn"
+    required: true
   us1_acm_arn:
     description: "us1 acm arn"
     required: true
@@ -92,6 +95,7 @@ runs:
         TF_VAR_rds_endpoint_name: ${{ inputs.rds_endpoint_name }}
         TF_VAR_redis_name: ${{ inputs.redis_name }}
         TF_VAR_elasticache_name: ${{ inputs.elasticache_name }}
+        TF_VAR_tokyo_acm_arn: ${{ inputs.tokyo_acm_arm }}
         TF_VAR_us1_acm_arn: ${{ inputs.us1_acm_arn }}
 
     - name: apply
@@ -107,4 +111,5 @@ runs:
         TF_VAR_rds_endpoint_name: ${{ inputs.rds_endpoint_name }}
         TF_VAR_redis_name: ${{ inputs.redis_name }}
         TF_VAR_elasticache_name: ${{ inputs.elasticache_name }}
+        TF_VAR_tokyo_acm_arn: ${{ inputs.tokyo_acm_arm }}
         TF_VAR_us1_acm_arn: ${{ inputs.us1_acm_arn }}
