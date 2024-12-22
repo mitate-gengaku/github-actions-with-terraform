@@ -3,13 +3,13 @@ output "rds_host_ssm" {
 }
 
 output "rds_dbname_ssm" {
-  value = data.aws_ssm_parameter.rds_dbname.value
+  value = var.rds_dbname
 }
 
 output "rds_username_ssm" {
-  value = data.aws_ssm_parameter.rds_username.value
+  value = var.rds_username
 }
 
 output "rds_password_ssm" {
-  value = data.aws_ssm_parameter.rds_password.value
+  value = var.rds_password
 }
