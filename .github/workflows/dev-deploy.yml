@@ -54,5 +54,5 @@ jobs:
           rds_endpoint_name: ${{ env.RDS_ENDPOINT_NAME }}
           redis_name: ${{ env.REDIS_NAME }}
           elasticache_name: ${{ env.ELASTICACHE_NAME }}
-          tokyo_acm_arn: ${{ env.US1_ACM_ARN }}
+          tokyo_acm_arn: ${{ env.TOKYO_ACM_ARN }}
           us1_acm_arn: ${{ env.US1_ACM_ARN }}
