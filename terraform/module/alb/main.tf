@@ -1,7 +1,3 @@
-data "aws_acm_certificate" "dev" {
-  domain = "shomotsu.net"
-}
-
 resource "aws_alb" "alb" {
   name     = join("-", [var.application_prefix, var.env, "alb"])
   internal = false
@@ -41,7 +37,7 @@ resource "aws_alb_listener" "http" {
 resource "aws_alb_listener" "https" {
   load_balancer_arn = aws_alb.alb.arn
 
-  certificate_arn = data.aws_acm_certificate.dev.arn
+  certificate_arn = var.acm_arn
 
   port = "443"
   protocol = "HTTPS"
