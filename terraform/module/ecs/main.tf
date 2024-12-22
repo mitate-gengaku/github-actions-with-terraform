@@ -46,7 +46,7 @@ resource "aws_ecs_task_definition" "task_definition" {
               awslogs-stream-prefix = "ecs"
             }
           }
-          name             = "${var.php_container_name}"
+          name             = var.php_container_name
           portMappings     = [
             {
               containerPort = 9000

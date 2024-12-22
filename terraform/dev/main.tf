@@ -193,7 +193,7 @@ module "ecs" {
   php_container_image = "${module.ecr.php_repository_url}:v1.0.0"
   php_container_name = module.ecr.php_repository_name
   nginx_container_image = "${module.ecr.nginx_repository_url}:v1.0.0"
-  nginx_container_name = module.ecr.php_repository_name
+  nginx_container_name = module.ecr.nginx_repository_name
 
   task_role_arn = var.task_role_arn
   execution_role_arn = var.execution_role_arn
