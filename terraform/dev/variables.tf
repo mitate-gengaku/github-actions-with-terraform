@@ -28,3 +28,23 @@ variable "tokyo_acm_arn" {
 variable "us1_acm_arn" {
   type = string
 }
+
+variable "env_s3_bucket_arn" {
+  type = string
+}
+
+variable "task_role_arn" {
+  type = string
+}
+
+variable "execution_role_arn" {
+  type = string
+}
+
+variable "app_key" {
+  type = string
+}
+
+variable "account_id" {
+  type = string
+}

@@ -46,6 +46,18 @@ inputs:
   us1_acm_arn:
     description: "us1 acm arn"
     required: true
+  env_s3_bucket_arn:
+    description: "env s3 bucket arn"
+    required: true
+  task_role_arn:
+    description: "task role arn"
+    required: true
+  execution_role_arn:
+    description: "execution role arn"
+    required: true
+  app_key:
+    description: "app key"
+    required: true
 
 runs:
   using: "composite"
@@ -113,3 +125,7 @@ runs:
         TF_VAR_elasticache_name: ${{ inputs.elasticache_name }}
         TF_VAR_tokyo_acm_arn: ${{ inputs.tokyo_acm_arn }}
         TF_VAR_us1_acm_arn: ${{ inputs.us1_acm_arn }}
+        TF_VAR_env_s3_bucket_arn: ${{ inputs.ENV_S3_BUCKET_ARN }}
+        TF_VAR_task_role_arn: ${{ inputs.TASK_ROLE_ARN }}
+        TF_VAR_execution_role_arn: ${{ inputs.EXECUTION_ROLE_ARN }}
+        TF_VAR_app_key: ${{ inputs.app_key }}

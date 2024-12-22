@@ -21,6 +21,10 @@ env:
   ELASTICACHE_NAME: ${{ secrets.ELASTICACHE_NAME }}
   TOKYO_ACM_ARN: ${{ secrets.TOKYO_ACM_ARN }}
   US1_ACM_ARN: ${{ secrets.US1_ACM_ARN }}
+  ENV_S3_BUCKET_ARN: ${{ secrets.ENV_S3_BUCKET_ARN }}
+  TASK_ROLE_ARN: ${{ secrets.TASK_ROLE_ARN }}
+  EXECUTION_ROLE_ARN: ${{ secrets.EXECUTION_ROLE_ARN }}
+  APP_KEY: ${{ secrets.app_key }}
   
 jobs:
   setup:
@@ -56,3 +60,7 @@ jobs:
           elasticache_name: ${{ env.ELASTICACHE_NAME }}
           tokyo_acm_arn: ${{ env.TOKYO_ACM_ARN }}
           us1_acm_arn: ${{ env.US1_ACM_ARN }}
+          env_s3_bucket_arn: ${{ env.ENV_S3_BUCKET_ARN }}
+          task_role_arn: ${{ env.TASK_ROLE_ARN }}
+          execution_role_arn: ${{ env.EXECUTION_ROLE_ARN }}
+          app_key: ${{ env.app_key }}

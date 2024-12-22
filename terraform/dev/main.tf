@@ -144,9 +144,9 @@ module "ecr" {
         scan_on_push = true
       }
     }
-    "laravel" = {
+    "php" = {
       image_tag_mutability = "IMMUTABLE"
-      name                 = "laravel-repository"
+      name                 = "php-repository"
 
       image_scanning_configuration = {
         scan_on_push = true
@@ -165,4 +165,43 @@ module "alb" {
 
   certificate_arn = var.tokyo_acm_arn
   vpc_id = module.network.vpc_id
+}
+
+module "ecs" {
+  source = "../module/ecs"
+
+  secrets = [
+    {
+      "name" : "DB_HOST",
+      "valueFrom" : module.rds.rds_host_ssm
+    },
+    {
+      "name" : "DB_DATABASE",
+      "valueFrom" : module.rds.rds_dbname_ssm
+    },
+    {
+      "name" : "DB_USERNAME",
+      "valueFrom" : module.rds.rds_username_ssm
+    },
+    {
+      "name" : "DB_PASSWORD",
+      "valueFrom" : module.rds.rds_password_ssm
+    },
+  ]
+
+  env_s3_bucket_arn = var.env_s3_bucket_arn
+  php_container_image = "${module.ecr.php_repository_url}:v1.0.0"
+  php_container_name = module.ecr.php_repository_name
+  nginx_container_image = "${module.ecr.nginx_repository_url}:v1.0.0"
+  nginx_container_name = module.ecr.php_repository_name
+
+  task_role_arn = var.task_role_arn
+  execution_role_arn = var.execution_role_arn
+
+  app_key = var.app_key
+  public_subnets = [for subnet in module.network.public_subnets : subnet.id]
+  security_groups = [
+    module.security_group.ecs_sg_id
+  ]
+  target_group_arn = module.alb.target_group_arn
 }
