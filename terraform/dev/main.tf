@@ -104,7 +104,7 @@ module "cloudfront" {
   source = "../module/cloudfront"
 
   oac_name = "shomotsu-s3-oac"
-  image_acm_domain = "dev-images.shomotsu.net"
+  image_acm_domain = "shomotsu.net"
   s3_origin_id = module.s3.s3_bucket_id
   s3_origin_name = module.s3.s3_bucket_regional_domain_name
   web_acl_id = module.waf.cloudfront_image_waf_arn
