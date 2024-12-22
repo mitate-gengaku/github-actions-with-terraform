@@ -88,8 +88,9 @@ module "rds" {
 module "elasticache" {
   source = "../module/elasticache"
 
-  name = var.elasticache_name
+  name = var.redis_name
   subnet_ids  = [for subnet in module.network.private_subnets : subnet.id]
+  elasticache_name = var.elasticache_name
 
   security_group_ids = [
     module.security_group.elasticache_sg_id

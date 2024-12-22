@@ -32,10 +32,15 @@ resource "aws_elasticache_serverless_cache" "elasticache_cluster" {
 }
 
 resource "aws_ssm_parameter" "elasticache_host" {
-  name = "/shomotsu/elasticache/host"
+  name = var.elasticache_name
 
   type = "SecureString"
   value = "${aws_elasticache_serverless_cache.elasticache_cluster[0].endpoint[0].address}"
+
+  tags = {
+    resource = "ssm"
+    env = var.env
+  }
 }
 
 resource "aws_kms_key" "cache_key" {

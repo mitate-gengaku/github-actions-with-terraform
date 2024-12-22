@@ -19,3 +19,7 @@ variable "subnet_ids" {
 variable "security_group_ids" {
   type = set(string)
 }
+
+variable "elasticache_name" {
+  
+}
