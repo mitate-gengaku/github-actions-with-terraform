@@ -23,7 +23,7 @@ env:
   ENV_S3_BUCKET_ARN: ${{ secrets.ENV_S3_BUCKET_ARN }}
   TASK_ROLE_ARN: ${{ secrets.TASK_ROLE_ARN }}
   EXECUTION_ROLE_ARN: ${{ secrets.EXECUTION_ROLE_ARN }}
-  APP_KEY: ${{ secrets.app_key }}
+  APP_KEY: ${{ secrets.APP_KEY }}
 
 jobs:
   destory:
@@ -56,4 +56,4 @@ jobs:
           env_s3_bucket_arn: ${{ env.ENV_S3_BUCKET_ARN }}
           task_role_arn: ${{ env.TASK_ROLE_ARN }}
           execution_role_arn: ${{ env.EXECUTION_ROLE_ARN }}
-          app_key: ${{ env.app_key }}
+          app_key: ${{ env.APP_KEY }}
