@@ -34,7 +34,7 @@ resource "aws_elasticache_serverless_cache" "elasticache_cluster" {
 resource "aws_ssm_parameter" "elasticache_host" {
   name = "/shomotsu/elasticache/host"
 
-  type = "String"
+  type = "SecureString"
   value = "${aws_elasticache_serverless_cache.elasticache_cluster[0].endpoint[0].address}"
 }
 
