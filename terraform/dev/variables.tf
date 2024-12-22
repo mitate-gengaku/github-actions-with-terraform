@@ -44,7 +44,3 @@ variable "execution_role_arn" {
 variable "app_key" {
   type = string
 }
-
-variable "account_id" {
-  type = string
-}
