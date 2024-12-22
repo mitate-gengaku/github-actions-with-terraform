@@ -50,7 +50,6 @@ resource "aws_cloudfront_distribution" "s3_cloudfront" {
   }
 
   web_acl_id = var.web_acl_id
-  provider = aws.us-east-1
   tags = {
     Name = "S3 cloudfront"
     env = var.env
@@ -66,7 +65,6 @@ resource "aws_cloudfront_distribution" "applicaiton_cloudfront" {
     price_class                     = "PriceClass_All"
     retain_on_delete                = false
     staging                         = false
-    provider = aws.us-east-1
     tags                            = {
       Name = "application cloudfront"
       env = var.env
@@ -99,7 +97,7 @@ resource "aws_cloudfront_distribution" "applicaiton_cloudfront" {
         realtime_log_config_arn    = null
         response_headers_policy_id = null
         smooth_streaming           = false
-        target_origin_id           = var.alb_id
+        target_origin_id           = var.alb_dns_name
         trusted_key_groups         = []
         trusted_signers            = []
         viewer_protocol_policy     = "allow-all"
@@ -125,7 +123,7 @@ resource "aws_cloudfront_distribution" "applicaiton_cloudfront" {
         realtime_log_config_arn    = null
         response_headers_policy_id = null
         smooth_streaming           = false
-        target_origin_id           = var.alb_id
+        target_origin_id           = var.alb_dns_name
         trusted_key_groups         = []
         trusted_signers            = []
         viewer_protocol_policy     = "allow-all"
@@ -150,7 +148,7 @@ resource "aws_cloudfront_distribution" "applicaiton_cloudfront" {
         realtime_log_config_arn    = null
         response_headers_policy_id = null
         smooth_streaming           = false
-        target_origin_id           = var.alb_id
+        target_origin_id           = var.alb_dns_name
         trusted_key_groups         = []
         trusted_signers            = []
         viewer_protocol_policy     = "allow-all"
@@ -175,7 +173,7 @@ resource "aws_cloudfront_distribution" "applicaiton_cloudfront" {
         realtime_log_config_arn    = null
         response_headers_policy_id = null
         smooth_streaming           = false
-        target_origin_id           = var.alb_id
+        target_origin_id           = var.alb_dns_name
         trusted_key_groups         = []
         trusted_signers            = []
         viewer_protocol_policy     = "allow-all"
@@ -200,7 +198,7 @@ resource "aws_cloudfront_distribution" "applicaiton_cloudfront" {
         realtime_log_config_arn    = null
         response_headers_policy_id = null
         smooth_streaming           = false
-        target_origin_id           = var.alb_id
+        target_origin_id           = var.alb_dns_name
         trusted_key_groups         = []
         trusted_signers            = []
         viewer_protocol_policy     = "allow-all"
@@ -225,7 +223,7 @@ resource "aws_cloudfront_distribution" "applicaiton_cloudfront" {
         realtime_log_config_arn    = null
         response_headers_policy_id = null
         smooth_streaming           = false
-        target_origin_id           = var.alb_id
+        target_origin_id           = var.alb_dns_name
         trusted_key_groups         = []
         trusted_signers            = []
         viewer_protocol_policy     = "allow-all"
@@ -250,7 +248,7 @@ resource "aws_cloudfront_distribution" "applicaiton_cloudfront" {
         realtime_log_config_arn    = null
         response_headers_policy_id = null
         smooth_streaming           = false
-        target_origin_id           = var.alb_id
+        target_origin_id           = var.alb_dns_name
         trusted_key_groups         = []
         trusted_signers            = []
         viewer_protocol_policy     = "allow-all"
@@ -259,9 +257,9 @@ resource "aws_cloudfront_distribution" "applicaiton_cloudfront" {
     origin {
         connection_attempts      = 3
         connection_timeout       = 10
-        domain_name              = var.alb_id
+        domain_name              = var.alb_dns_name
         origin_access_control_id = null
-        origin_id                = var.alb_id
+        origin_id                = var.alb_dns_name
         origin_path              = null
 
         custom_origin_config {

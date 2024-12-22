@@ -32,7 +32,7 @@ variable "us1_acm_arn" {
   type = string
 }
 
-variable "alb_id" {
+variable "alb_dns_name" {
   type = string
 }
 

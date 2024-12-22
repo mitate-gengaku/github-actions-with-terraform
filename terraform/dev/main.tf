@@ -121,7 +121,7 @@ module "cloudfront" {
   s3_origin_name = module.s3.s3_bucket_regional_domain_name
   web_acl_id = module.waf.cloudfront_image_waf_arn
   ### 
-  alb_id = aws_alb.alb.id
+  alb_dns_name = aws_alb.alb.dns_name
   ### 
   us1_acm_arn = var.us1_acm_arn
   applicaiton_waf_id = module.waf.application_waf_arn
