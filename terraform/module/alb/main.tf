@@ -1,5 +1,5 @@
 data "aws_acm_certificate" "dev" {
-  domain = "shomotsu.net."
+  domain = "shomotsu.net"
 }
 
 resource "aws_alb" "alb" {
