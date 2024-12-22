@@ -50,6 +50,7 @@ resource "aws_cloudfront_distribution" "s3_cloudfront" {
   }
 
   web_acl_id = var.web_acl_id
+  provider = aws.us-east-1
   tags = {
     Name = "S3 cloudfront"
     env = var.env
@@ -65,6 +66,7 @@ resource "aws_cloudfront_distribution" "applicaiton_cloudfront" {
     price_class                     = "PriceClass_All"
     retain_on_delete                = false
     staging                         = false
+    provider = aws.us-east-1
     tags                            = {
       Name = "application cloudfront"
       env = var.env

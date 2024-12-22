@@ -103,7 +103,7 @@ module "route53" {
   dev_domain_name = "dev.shomotsu.net"
   alb_cloudfront_zone_id = module.cloudfront.application_cloudfront_zone_id
   alb_cloudfront_dns_name = module.cloudfront.application_cloudfront_dns_name
-  cloudfront_name = "images.shomotsu.net"
+  cloudfront_name = "dev-images.shomotsu.net"
   cloudfront_cdn_domain_hosted_zone_id = module.cloudfront.s3_cloudfront_zone_id
   cloudfront_cdn_domain_name = module.cloudfront.s3_cloudfront_dns_name
 }
@@ -116,7 +116,7 @@ module "cloudfront" {
   source = "../module/cloudfront"
 
   oac_name = "shomotsu-s3-oac"
-  image_acm_domain = "images.shomotsu.net"
+  image_acm_domain = "dev-images.shomotsu.net"
   s3_origin_id = module.s3.s3_bucket_id
   s3_origin_name = module.s3.s3_bucket_regional_domain_name
   web_acl_id = module.waf.cloudfront_image_waf_arn
