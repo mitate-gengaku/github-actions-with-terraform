@@ -1,5 +1,5 @@
 output "rds_host_ssm" {
-  value = aws_ssm_parameter.rds_endpoint.value
+  value = var.rds_endpoint_name
 }
 
 output "rds_dbname_ssm" {
