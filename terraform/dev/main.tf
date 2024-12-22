@@ -155,7 +155,6 @@ module "ecr" {
   }
 }
 
-
 module "alb" {
   source = "../module/alb"
 
@@ -164,6 +163,6 @@ module "alb" {
   ]
   subnets = [for subnet in module.network.public_subnets : subnet.id]
 
-  acm_arn = var.tokyo_acm_arn
+  certificate_arn = var.tokyo_acm_arn
   vpc_id = module.network.vpc_id
 }

@@ -16,7 +16,7 @@ variable "subnets" {
   
 }
 
-variable "acm_arn" {
+variable "certificate_arn" {
   type = string
 }
 
