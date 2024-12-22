@@ -36,15 +36,15 @@ resource "aws_ecs_task_definition" "task_definition" {
               },
               {
                 "name" : "DB_DATABASE",
-                "valueFrom" : var.rds.rds_dbname_ssm
+                "valueFrom" : var.rds_dbname_ssm
               },
               {
                 "name" : "DB_USERNAME",
-                "valueFrom" : var.rds.rds_username_ssm
+                "valueFrom" : var.rds_username_ssm
               },
               {
                 "name" : "DB_PASSWORD",
-                "valueFrom" : var.rds.rds_password_ssm
+                "valueFrom" : var.rds_password_ssm
               },
               {
                 "name" : "APP_KEY",
