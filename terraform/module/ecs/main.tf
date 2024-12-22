@@ -48,7 +48,7 @@ resource "aws_ecs_task_definition" "task_definition" {
               },
               {
                 "name" : "APP_KEY",
-                "valueFrom": data.aws_ssm_parameter.app_key.value
+                "valueFrom": var.app_key
               }
           ]
           essential        = true
