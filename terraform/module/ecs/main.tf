@@ -32,19 +32,19 @@ resource "aws_ecs_task_definition" "task_definition" {
           secrets     = [
               {
                 "name" : "DB_HOST",
-                "valueFrom" : module.rds.rds_host_ssm
+                "valueFrom" : var.rds_host_ssm
               },
               {
                 "name" : "DB_DATABASE",
-                "valueFrom" : module.rds.rds_dbname_ssm
+                "valueFrom" : var.rds.rds_dbname_ssm
               },
               {
                 "name" : "DB_USERNAME",
-                "valueFrom" : module.rds.rds_username_ssm
+                "valueFrom" : var.rds.rds_username_ssm
               },
               {
                 "name" : "DB_PASSWORD",
-                "valueFrom" : module.rds.rds_password_ssm
+                "valueFrom" : var.rds.rds_password_ssm
               },
               {
                 "name" : "APP_KEY",
