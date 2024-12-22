@@ -29,12 +29,28 @@ resource "aws_ecs_task_definition" "task_definition" {
               value = var.env_s3_bucket_arn
             },
           ]
-          secrets     = concat(var.secrets, [
-            {
-              "name" : "APP_KEY",
-              "valueFrom": data.aws_ssm_parameter.app_key.value
-            },
-          ])
+          secrets     = [
+              {
+                "name" : "DB_HOST",
+                "valueFrom" : module.rds.rds_host_ssm
+              },
+              {
+                "name" : "DB_DATABASE",
+                "valueFrom" : module.rds.rds_dbname_ssm
+              },
+              {
+                "name" : "DB_USERNAME",
+                "valueFrom" : module.rds.rds_username_ssm
+              },
+              {
+                "name" : "DB_PASSWORD",
+                "valueFrom" : module.rds.rds_password_ssm
+              },
+              {
+                "name" : "APP_KEY",
+                "valueFrom": data.aws_ssm_parameter.app_key.value
+              }
+          ]
           essential        = true
           image            = var.php_container_image
           logConfiguration = {

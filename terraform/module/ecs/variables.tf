@@ -12,8 +12,17 @@ variable "env_s3_bucket_arn" {
   type = string
 }
 
-variable "secrets" {
-  
+variable "rds_host_ssm" {
+  type = string
+}
+variable "rds_dbname_ssm" {
+  type = string
+}
+variable "rds_username_ssm" {
+  type = string
+}
+variable "rds_password_ssm" {
+  type = string
 }
 
 variable "php_container_image" {

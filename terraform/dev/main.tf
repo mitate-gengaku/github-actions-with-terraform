@@ -170,24 +170,10 @@ module "alb" {
 module "ecs" {
   source = "../module/ecs"
 
-  secrets = [
-    {
-      "name" : "DB_HOST",
-      "valueFrom" : module.rds.rds_host_ssm
-    },
-    {
-      "name" : "DB_DATABASE",
-      "valueFrom" : module.rds.rds_dbname_ssm
-    },
-    {
-      "name" : "DB_USERNAME",
-      "valueFrom" : module.rds.rds_username_ssm
-    },
-    {
-      "name" : "DB_PASSWORD",
-      "valueFrom" : module.rds.rds_password_ssm
-    },
-  ]
+  rds_host_ssm =  module.rds.rds_host_ssm
+  rds_dbname_ssm = module.rds.rds_dbname_ssm
+  rds_username_ssm = module.rds.rds_username_ssm
+  rds_password_ssm = module.rds.rds_password_ssm
 
   env_s3_bucket_arn = var.env_s3_bucket_arn
   php_container_image = "${module.ecr.php_repository_url}:v1.0.0"
